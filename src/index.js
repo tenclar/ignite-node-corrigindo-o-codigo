@@ -59,15 +59,16 @@ app.put("/repositories/:id", (request, response) => {
   // const repository = { ...repositories[repositoryIndex], ...updatedRepository };
   // repositories[repositoryIndex] = repository;
 
-  return response.json({repository});
+  return response.json(repository);
 });
 
 app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
+  
 
-  repositoryIndex = repositories.findIndex(repository => repository.id === id);
+  const repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
-  if (repositoryIndex === -1) {
+  if ( repositoryIndex === -1 ) {
     return response.status(404).json({ error: "Repository not found" });
   }
 
