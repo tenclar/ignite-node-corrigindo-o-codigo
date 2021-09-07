@@ -15,14 +15,9 @@ app.get("/repositories", (request, response) => {
 app.post("/repositories", (request, response) => {
   const { title, url, techs } = request.body;
 
-  const repExists = repositories.find((r) => r.title === title);
-
-  if(repExists){
-    return response.status(400).json({error: `Repository already Exists ${title}`});
-  }
-
+  const uid = uuid();
   const repository = {
-    id: uuid(),
+    id: uid,
     title,
     url,
     techs,
@@ -34,20 +29,17 @@ app.post("/repositories", (request, response) => {
 });
 
 app.put("/repositories/:id", (request, response) => {
-  const { id } = request.params;
-  
+  const { id } = request.params;  
   const { title, url, techs } = request.body;
-
   const repository = repositories.find(r => r.id === id);
-
   if (!repository) {
     return response.status(404).json({ error: "Repository not found" });
   }
  
- 
   repository.title = title;
   repository.url = url;
   repository.techs = techs;
+  
   
   // const updatedRepository = request.body;
   // repositoryIndex = repositories.findindex(repository => repository.id === id);
